@@ -11,8 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('/','PostController');
 
-Route::resource('blog','PostController');
+Route::resource('admin','PostsAdminController');
