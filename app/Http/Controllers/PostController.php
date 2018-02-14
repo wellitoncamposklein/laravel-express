@@ -7,13 +7,8 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index(){
-        $posts = [
-            0 => 'Meu primeiro Post',
-            1 => 'Meu segundo Post',
-            2 => 'Meu terceiro Post',
-            3 => 'Meu quarto Post'
-        ];
+    public function index(Post $postEloquent){
+        $posts = $postEloquent->all();
 
         return view('blog.index',compact('posts'));
     }
