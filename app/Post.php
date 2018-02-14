@@ -11,4 +11,12 @@ class Post extends Model
             'title',
             'content'
         ];
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+
+    public function tags(){
+        return $this->belongsToMany(Tag::class,'posts_tags');
+    }
 }
