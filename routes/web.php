@@ -11,6 +11,12 @@
 |
 */
 
-Route::resource('/','PostController');
+//Route::resource('/','PostController');
+//
+//Route::resource('admin','PostsAdminController');
 
-Route::resource('admin','PostsAdminController');
+Route::get('/','PostController@index');
+
+Route::get('admin/posts','PostsAdminController@index')->name('admin.index');
+Route::get('admin/posts/create','PostsAdminController@create')->name('admin.posts.create');
+Route::post('admin/posts/store','PostsAdminController@store')->name('admin.posts.store');

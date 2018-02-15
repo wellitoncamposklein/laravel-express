@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Post;
-use Illuminate\Http\Request;
 
 class PostsAdminController extends Controller
 {
@@ -18,5 +17,9 @@ class PostsAdminController extends Controller
         $posts = $this->post->paginate(5);
 
         return view('admin.posts.index',compact('posts'));
+    }
+
+    public function create(){
+        return view('admin.posts.create');
     }
 }
