@@ -13,10 +13,15 @@
 
 //Route::resource('/','PostController');
 //
-//Route::resource('admin','PostsAdminController');
+//Route::resource('admin/posts','PostsAdminController');
 
 Route::get('/','PostController@index');
 
-Route::get('admin/posts','PostsAdminController@index')->name('admin.index');
-Route::get('admin/posts/create','PostsAdminController@create')->name('admin.posts.create');
-Route::post('admin/posts/store','PostsAdminController@store')->name('admin.posts.store');
+Route::group(['prefix'=>'admin'],function(){
+    Route::get('/','PostsAdminController@index')->name('admin.index');
+    Route::get('create','PostsAdminController@create')->name('admin.create');
+    Route::post('store','PostsAdminController@store')->name('admin.store');
+    Route::get('edit/{id}','PostsAdminController@edit')->name('admin.edit');
+    Route::put('update/{id}','PostsAdminController@update')->name('admin.update');
+    Route::get('destroy/{id}','PostsAdminController@destroy')->name('admin.destroy');
+});

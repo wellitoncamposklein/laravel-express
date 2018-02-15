@@ -3,7 +3,7 @@
 @section('title','Blog Admin')
 
 @section('content')
-    <h3>Create new Post</h3>
+    <h3>Edit Post: <b>{{$post->title}}</b></h3>
     @if($errors->any())
         <ul class="alert alert-danger">
             @foreach($errors->all() as $error)
@@ -12,17 +12,12 @@
         </ul>
     @endif
 
-    {!! Form::open(['route'=>'admin.store','method'=>'post']) !!}
+    {!! Form::model($post,['route'=>['admin.update',$post->id],'method'=>'put']) !!}
 
     @include('admin.posts._form')
 
     <div class="form-group">
-        {!! Form::label('tags','Tags:') !!}
-        {!! Form::textarea('tags',null, ['class'=>'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::submit('Create Post', ['class'=>'btn btn-primary']) !!}
+        {!! Form::submit('Save Post', ['class'=>'btn btn-primary']) !!}
     </div>
 
     {!! Form::close() !!}
