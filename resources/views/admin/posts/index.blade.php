@@ -19,4 +19,5 @@
         </tr>
         @endforeach
     </table>
+    {{ $posts->links() }}
 @stop
