@@ -60,7 +60,10 @@ class PostsAdminController extends Controller
          * array_map('trim','') utilizando para retirar os espacos do inicio e fim dos obj
          * array_filter() irei retornar um array sem espacos
          * */
-        $tagList = array_filter(array_map('trim',explode(' ',$tags)));
+        $replace = array("\"", "'");
+        $filtered = str_replace($replace, "", $tags);
+
+        $tagList = array_filter(array_map('trim',explode(',',$filtered)));
         $tagsIDs = [];
 
         //ira consultar e o banco retornando o Id da existente
