@@ -17,7 +17,7 @@
 
 Route::get('/','PostController@index');
 
-Route::group(['prefix'=>'admin'],function(){
+Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
     Route::get('/','PostsAdminController@index')->name('admin.index');
     Route::get('create','PostsAdminController@create')->name('admin.create');
     Route::post('store','PostsAdminController@store')->name('admin.store');

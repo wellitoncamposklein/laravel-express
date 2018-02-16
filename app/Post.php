@@ -19,4 +19,16 @@ class Post extends Model
     public function tags(){
         return $this->belongsToMany(Tag::class,'posts_tags');
     }
+
+    /*
+     * as palavras (get e Attribute) sao obrigatorios
+     * o que fica entre elas e o atributo dinamico
+     * */
+    public function getTagListAttribute(){
+        /*
+         * pluck('name_col') ira retornar apenas a coluna passada no parametro
+         * */
+        $tags = $this->tags()->pluck('name')->all();
+        return implode(' ',$tags);
+    }
 }

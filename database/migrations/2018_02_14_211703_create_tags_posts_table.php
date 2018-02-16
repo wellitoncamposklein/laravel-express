@@ -15,9 +15,9 @@ class CreateTagsPostsTable extends Migration
     {
         Schema::create('posts_tags', function (Blueprint $table) {
             $table->unsignedInteger('post_id');
-            $table->foreign('post_id')->references('id')->on('posts');
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
             $table->unsignedInteger('tag_id');
-            $table->foreign('tag_id')->references('id')->on('tags');
+            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
             $table->engine = 'InnoDB';
         });
 

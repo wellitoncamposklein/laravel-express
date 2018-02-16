@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Post;
 use App\Tag;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostsAdminController extends Controller
 {
@@ -27,19 +29,9 @@ class PostsAdminController extends Controller
     }
 
     public function store(PostRequest $requestEloquent){
-        $tags = array_filter(array_map('trim',explode(',',$requestEloquent->tags)));
-        $tagsIDs = [];
-
-        foreach ($tags as $tagName){
-            //ira consultar e o banco retornando o Id se da existente
-            //caso nao exista ira gravar um novo e retornar o seu novo id
-            $tagsIDs[] = Tag::firstOrCreate(['name'=>$tagName])->id;
-        }
-
         $post = $this->post->create($requestEloquent->all());
         
-        $post->tags()->sync($tagsIDs);//antes de gravar a relacao verifica se ja existe
-
+        $post->tags()->sync($this->getTagsIDs($requestEloquent->tags));//antes de gravar uma nova relacao, verifica se ja existe
         return redirect()->route('admin.index');
     }
     public function edit($id){
@@ -50,6 +42,9 @@ class PostsAdminController extends Controller
     public function update($id, PostRequest $requestEloquent){
         $this->post->find($id)->update($requestEloquent->all());
 
+        $post = $this->post->find($id);
+
+        $post->tags()->sync($this->getTagsIDs($requestEloquent->tags));//antes de gravar uma nova relacao, verifica se ja existe
         return redirect()->route('admin.index');
     }
 
@@ -57,5 +52,24 @@ class PostsAdminController extends Controller
         $this->post->find($id)->delete();
 
         return redirect()->route('admin.index');
+    }
+
+    private function getTagsIDs($tags){
+        /*
+         * explode() aonde informar espacos, irei entender como um novo obj pro array
+         * array_map('trim','') utilizando para retirar os espacos do inicio e fim dos obj
+         * array_filter() irei retornar um array sem espacos
+         * */
+        $tagList = array_filter(array_map('trim',explode(' ',$tags)));
+        $tagsIDs = [];
+
+        //ira consultar e o banco retornando o Id da existente
+        //caso nao exista ira gravar um novo e retornar o seu novo id
+        foreach ($tagList as $tagName){
+            //firstOrCreate = traz se existir, se nao cria um novo
+            $tagsIDs[] = Tag::firstOrCreate(['name'=>$tagName])->id;
+        }
+
+        return $tagsIDs;
     }
 }

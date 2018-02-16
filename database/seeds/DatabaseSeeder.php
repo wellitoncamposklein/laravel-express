@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use \Illuminate\Support\Facades\DB;
+use \App\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,6 +13,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        factory(User::class)->create(
+            [
+                'name' => 'welliton',
+                'email' => 'welliton.fokushima@gmail.com',
+                'password' => bcrypt(123456), // secret
+                'remember_token' => str_random(10),
+            ]
+        );
+
         //disable foreign key check for this connection before running seeders
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
