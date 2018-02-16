@@ -11,14 +11,16 @@
 |
 */
 
-//Route::resource('/','PostController');
-//
-//Route::resource('admin/posts','PostsAdminController');
+Auth::routes();
 
 Route::get('/','PostController@index');
 
-Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
-    Route::get('/','PostsAdminController@index')->name('admin.index');
+//CADASTROS
+Route::middleware(['auth'])->group(function (){
+    Route::get('/home', 'PostController@index')->name('home');
+
+    Route::get('/admin','PostsAdminController@index')->name('admin.index');
+
     Route::get('create','PostsAdminController@create')->name('admin.create');
     Route::post('store','PostsAdminController@store')->name('admin.store');
     Route::get('edit/{id}','PostsAdminController@edit')->name('admin.edit');

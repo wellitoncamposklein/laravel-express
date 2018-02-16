@@ -1,10 +1,9 @@
-@extends('template')
+@extends('layouts.app')
 
 @section('title','Blog')
 
 @section('content')
-    <br><br><br>
-    <h3>Feed</h3><br><br>
+    <h3>Feed</h3>
     @foreach($posts as $post)
         <h3>{{ $post->title }}</h3>
         <p>{{ $post->content }}</p>
@@ -21,4 +20,5 @@
         @endforeach
         <hr>
     @endforeach
+    {{ $posts->links() }}
 @stop

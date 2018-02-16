@@ -1,4 +1,4 @@
-@extends('template')
+@extends('layouts.app')
 
 @section('title','Blog Admin')
 
@@ -22,14 +22,14 @@
                 <th>Action</th>
             </tr>
             @foreach($posts as $post)
-            <tr>
-                <td>{{$post->id}}</td>
-                <td>{{$post->title}}</td>
-                <td>
-                    <a href="{{route('admin.edit',[$post->id])}}" class="btn btn-default">Edit</a>
-                    <a href="{{route('admin.destroy',[$post->id])}}" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>{{$post->id}}</td>
+                    <td>{{$post->title}}</td>
+                    <td>
+                        <a href="{{route('admin.edit',[$post->id])}}" class="btn btn-default">Edit</a>
+                        <a href="{{route('admin.destroy',[$post->id])}}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
             @endforeach
         </table>
     </div>
